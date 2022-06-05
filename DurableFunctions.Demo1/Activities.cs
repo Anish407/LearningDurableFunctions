@@ -11,12 +11,25 @@ namespace DurableFunctions.Demo1
         [FunctionName(nameof(SimpleActivity))]
         public static SimpleActivityResponseModel SimpleActivity([ActivityTrigger] SimpleActivityRequestModel requestModel, ILogger log)
         {
-            log.LogInformation($"Saying hello to {requestModel.State}.");
-            return new SimpleActivityResponseModel
+            try
             {
-                DateTime = DateTimeOffset.UtcNow,
-                Message = $"{requestModel.data.Id}-{requestModel.data.Name}-{requestModel.State}"
-            };
+                log.LogInformation($"Saying hello to {requestModel.State}.");
+                return new SimpleActivityResponseModel
+                {
+                    DateTime = DateTimeOffset.UtcNow,
+                    Message = $"{requestModel.data.Id}-{requestModel.data.Name}-{requestModel.State}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions inside the activity and then run some clean up inside the orchestrator
+                return new SimpleActivityResponseModel
+                {
+                    IsComplete= false,
+                    Message= ex.Message
+                };
+            }
+           
         }
     }
 }

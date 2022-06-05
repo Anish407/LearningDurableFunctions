@@ -7,5 +7,8 @@ namespace DurableFunctions.Demo1.Models
         public string Message { get; set; }
 
         public DateTimeOffset DateTime { get; set; }
+
+        public bool  IsComplete { get; set; }
+
     }
 }
