@@ -3,6 +3,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DurableFunctions.Demo1
 {
@@ -30,6 +32,16 @@ namespace DurableFunctions.Demo1
                 };
             }
            
+        }
+
+
+        [FunctionName(nameof(GetConfigActivity))]
+        public static string[] GetConfigActivity([ActivityTrigger] object input
+            )
+        {
+            string[] states = Environment.GetEnvironmentVariable("states").Split(",");
+
+            return states;
         }
     }
 }

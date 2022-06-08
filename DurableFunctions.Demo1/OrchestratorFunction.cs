@@ -31,6 +31,9 @@ namespace DurableFunctions.Demo1
 
             try
             {
+                string[] states = await context.CallSubOrchestratorAsync<string[]>("GetInitialConfigValuesSubOrchestrator", null);
+
+
                 // retry 4 times with a delay of 2 secs in each retry
                 RetryOptions retryOptions = new RetryOptions(
                                      firstRetryInterval: TimeSpan.FromSeconds(2),
@@ -43,7 +46,7 @@ namespace DurableFunctions.Demo1
                        input: new SimpleActivityRequestModel
                        {
                            data = request,
-                           State = "Tokyo"
+                           State = states[0]
                        });
 
                 // either handle exceptions inside the activities like below
@@ -62,14 +65,14 @@ namespace DurableFunctions.Demo1
                 outputs.Add(await context.CallActivityAsync<SimpleActivityResponseModel>("SimpleActivity", new SimpleActivityRequestModel
                 {
                     data = request,
-                    State = "Seattle"
+                    State = states[1]
                 }));
 
                 logger.LogInformation("Calling activity : 3");
                 outputs.Add(await context.CallActivityAsync<SimpleActivityResponseModel>("SimpleActivity", new SimpleActivityRequestModel
                 {
                     data = request,
-                    State = "London"
+                    State = states[2]
                 }));
             }
             catch (Exception ex)
@@ -77,7 +80,11 @@ namespace DurableFunctions.Demo1
                 // run the cleanup activity 
                 return new List<SimpleActivityResponseModel>
                 {
-
+                    new SimpleActivityResponseModel
+                    {
+                        IsComplete= false,
+                        Message= ex.Message
+                    }
                 };
             }
             //}
@@ -85,6 +92,15 @@ namespace DurableFunctions.Demo1
            
 
             return outputs;
+        }
+
+        [FunctionName(nameof(GetInitialConfigValuesSubOrchestrator))]
+        public static async Task<string[]> GetInitialConfigValuesSubOrchestrator(
+            [OrchestrationTrigger] IDurableOrchestrationContext context)
+        {
+           var result =  await  context.CallActivityAsync<string[]>("GetConfigActivity", null);
+
+            return result;
         }
     }
 }
