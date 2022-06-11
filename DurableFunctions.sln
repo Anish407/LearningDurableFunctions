@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurableFunctions.Demo1", "DurableFunctions.Demo1\DurableFunctions.Demo1.csproj", "{6C1040CA-87A1-4567-9808-E803F606F370}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DurableFunctions.Demo1", "DurableFunctions.Demo1\DurableFunctions.Demo1.csproj", "{6C1040CA-87A1-4567-9808-E803F606F370}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

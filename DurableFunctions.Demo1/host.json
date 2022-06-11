@@ -6,6 +6,10 @@
     }
   },
   "logging": {
+    "LogLevel": {
+      "Default": "Error",
+      "Microsoft.AspNetCore": "Error"
+    },
     "applicationInsights": {
       "samplingSettings": {
         "isEnabled": true,

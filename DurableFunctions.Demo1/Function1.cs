@@ -21,9 +21,11 @@ namespace DurableFunctions.Demo1
             string result = query.Get("name");
 
             // Function input comes from the request content.
-            string instanceId = await starter.StartNewAsync("SimpleOrchestrator", null, new RequestModel { 
-             Name = result,
-            });
+            //string instanceId = await starter.StartNewAsync("SimpleOrchestrator", null, new RequestModel { 
+            // Name = result,
+            //});
+
+            string instanceId = await starter.StartNewAsync("HumanInteractionOrchestrator");
 
             log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
 

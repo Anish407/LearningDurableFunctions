@@ -31,6 +31,7 @@ namespace DurableFunctions.Demo1
 
             try
             {
+                // call sub orchestrator
                 string[] states = await context.CallSubOrchestratorAsync<string[]>("GetInitialConfigValuesSubOrchestrator", null);
 
 

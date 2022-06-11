@@ -36,8 +36,7 @@ namespace DurableFunctions.Demo1
 
 
         [FunctionName(nameof(GetConfigActivity))]
-        public static string[] GetConfigActivity([ActivityTrigger] object input
-            )
+        public static string[] GetConfigActivity([ActivityTrigger] object input)
         {
             string[] states = Environment.GetEnvironmentVariable("states").Split(",");
 
@@ -45,3 +44,4 @@ namespace DurableFunctions.Demo1
         }
     }
 }
+ 
